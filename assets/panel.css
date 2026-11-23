@@ -88,6 +88,68 @@
   color: #16161a;
 }
 
+/* The heart next to the die, and the favourites at the top of the panel. */
+
+.bar .favourite {
+  /* Right after the die; the language link stays at the far end. */
+  margin: -0.8rem auto -0.8rem 0.6rem;
+  padding: 0.8rem 0.6rem;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+}
+
+.bar .favourite[aria-pressed="true"] {
+  color: var(--accent-text);
+}
+
+.preview-favourites {
+  padding: 0 0 0.35rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.preview-panel:not(.open) .preview-favourites {
+  display: none;
+}
+
+.preview-favourites > span:first-child {
+  display: block;
+  padding: 0.45rem 0.6rem 0.3rem;
+  opacity: 0.55;
+}
+
+.preview-fav {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.preview-panel .preview-fav a {
+  padding-right: 0.2rem;
+}
+
+.preview-panel .preview-fav button {
+  padding: 0.42rem 0.55rem 0.42rem 0.25rem;
+  opacity: 0.6;
+}
+
+.preview-panel .preview-copy {
+  margin-top: 0.2rem;
+  opacity: 0.8;
+}
+
+.preview-list {
+  display: block;
+  width: 100%;
+  margin-top: 0.3rem;
+  font: 0.62rem/1.4 var(--mono);
+}
+
 /* A palette is shown in its own colours. */
 
 .preview-panel a[data-palette] {

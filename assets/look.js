@@ -209,14 +209,16 @@
     dice();
   });
 
-  // The author's panel: only when the address asks for it (?panel=1).
+  // The author's panel: only when the address asks for it (?panel=1 open, ?panel=0 closed).
+  // Raise TOOLS after a change to panel.js or panel.css, so browsers fetch the new files.
+  var TOOLS = '0.7.0';
   if (query.panel !== undefined && !embedded) {
     var sheet = document.createElement('link');
     sheet.rel = 'stylesheet';
-    sheet.href = root + 'assets/panel.css';
+    sheet.href = root + 'assets/panel.css?v=' + TOOLS;
     document.head.appendChild(sheet);
     var panel = document.createElement('script');
-    panel.src = root + 'assets/panel.js';
+    panel.src = root + 'assets/panel.js?v=' + TOOLS;
     document.head.appendChild(panel);
   }
 })();

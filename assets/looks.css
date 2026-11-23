@@ -1,0 +1,779 @@
+/*
+ * The looks of the page, other than the one site.css draws by itself:
+ * textures, scenes, styles of the drawing, typefaces and layouts. assets/look.js
+ * picks one of each at every visit and names it on <html>, or on the drawing.
+ * The colours are in assets/palettes.css.
+ */
+
+/* ==== trama: data-bg on <html> ==== */
+
+/* A scene may give the first screen a ground of its own: it takes the same texture. */
+
+html[data-bg="punti"] body,
+html[data-bg="punti"] header::before {
+  background-image: radial-gradient(circle at 1px 1px, var(--line) 1.1px, transparent 1.7px);
+  background-size: 22px 22px;
+}
+
+html[data-bg="sfuma"] body,
+html[data-bg="sfuma"] header::before {
+  background-image:
+    linear-gradient(to bottom, transparent, var(--paper) 40rem),
+    radial-gradient(circle at 1.5px 1.5px, var(--p3) 1.3px, transparent 1.9px);
+  background-size: auto, 17px 17px;
+}
+
+html[data-bg="griglia"] body,
+html[data-bg="griglia"] header::before {
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+html[data-bg="millimetrata"] body,
+html[data-bg="millimetrata"] header::before {
+  background-image:
+    linear-gradient(var(--line) 1.5px, transparent 1.5px),
+    linear-gradient(90deg, var(--line) 1.5px, transparent 1.5px),
+    linear-gradient(var(--soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--soft) 1px, transparent 1px);
+  background-size: 80px 80px, 80px 80px, 16px 16px, 16px 16px;
+}
+
+html[data-bg="tratteggio"] body,
+html[data-bg="tratteggio"] header::before {
+  background-image: repeating-linear-gradient(135deg, var(--line) 0 1px, transparent 1px 9px);
+}
+
+html[data-bg="grana"] body,
+html[data-bg="grana"] header::before {
+  background-image: url("grain.svg");
+}
+
+html[data-bg="onde"] body,
+html[data-bg="onde"] header::before {
+  background-image: url("onde.svg");
+  background-size: 520px 520px;
+}
+
+html[data-bg="rete"] body,
+html[data-bg="rete"] header::before {
+  background-image: url("rete.svg");
+  background-size: 420px 420px;
+}
+
+/* ==== scena: data-scene on <html> ==== */
+
+html[data-scene="palco"] body,
+html[data-scene="accento"] body,
+html[data-scene="doppio"] body,
+html[data-scene="taglio"] body,
+html[data-layout="grande"] body {
+  overflow-x: clip;
+}
+
+/*
+ * The body's own clipping is handed over to the window, where it only hides
+ * what runs off the side. With the root clipped as well, the body keeps its
+ * own and the page cannot be pushed sideways at all.
+ */
+
+html[data-scene="palco"],
+html[data-scene="riflettore"],
+html[data-scene="accento"],
+html[data-scene="doppio"],
+html[data-scene="taglio"],
+html[data-scene="orizzonte"],
+html[data-layout="grande"],
+html[data-layout="quinta"] {
+  overflow-x: clip;
+}
+
+/* "palco", "accento" and "taglio" lay a ground under the whole first screen, edge to edge. */
+
+html[data-scene="palco"] header,
+html[data-scene="accento"] header,
+html[data-scene="doppio"] header,
+html[data-scene="taglio"] header {
+  position: relative;
+  isolation: isolate;
+  color: var(--ink);
+}
+
+html[data-scene="palco"] header::before,
+html[data-scene="accento"] header::before,
+html[data-scene="taglio"] header::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  margin-left: -50vw;
+  background-color: var(--paper);
+}
+
+html[data-scene="palco"] main > section:first-child,
+html[data-scene="accento"] main > section:first-child,
+html[data-scene="doppio"] main > section:first-child,
+html[data-scene="taglio"] main > section:first-child {
+  border-top: 0;
+}
+
+/* "palco": the first screen in the opposite scheme. "doppio": only the side of the drawing. */
+
+html[data-scene="palco"] header,
+html[data-scene="doppio"] .element {
+  --paper: var(--o-paper);
+  --ink: var(--o-ink);
+  --muted: var(--o-muted);
+  --line: var(--o-line);
+  --accent: var(--o-accent);
+  --accent-text: var(--o-accent-text);
+  --mark: var(--o-mark);
+  --tint: var(--o-tint);
+  --soft: var(--o-soft);
+  --steel: var(--o-steel);
+  --p0: var(--o-p0);
+  --p1: var(--o-p1);
+  --p2: var(--o-p2);
+  --p3: var(--o-p3);
+  --n0: var(--o-n0);
+  --n1: var(--o-n1);
+  --n2: var(--o-n2);
+  --n3: var(--o-n3);
+}
+
+/* "accento": the first screen on the accent colour. */
+
+html[data-scene="accento"] header {
+  --paper: var(--a-paper);
+  --ink: var(--a-ink);
+  --muted: var(--a-muted);
+  --line: var(--a-line);
+  --accent: var(--a-accent);
+  --accent-text: var(--a-accent-text);
+  --mark: var(--a-mark);
+  --tint: var(--a-tint);
+  --soft: var(--a-soft);
+  --steel: var(--a-steel);
+  --p0: var(--a-p0);
+  --p1: var(--a-p1);
+  --p2: var(--a-p2);
+  --p3: var(--a-p3);
+  --n0: var(--a-n0);
+  --n1: var(--a-n1);
+  --n2: var(--a-n2);
+  --n3: var(--a-n3);
+}
+
+/*
+ * "doppio": on a phone the band runs across the page behind the drawing; on a
+ * wide screen it is the right half of the first screen.
+ */
+
+html[data-scene="doppio"] .element {
+  isolation: isolate;
+}
+
+html[data-scene="doppio"] .element::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -1.25rem;
+  bottom: calc(-1 * clamp(1.5rem, 5vw, 5rem));
+  left: 50%;
+  width: 100vw;
+  margin-left: -50vw;
+  background-color: var(--paper);
+}
+
+@media (min-width: 52rem) {
+  html[data-scene="doppio"] .element::before {
+    content: none;
+  }
+
+  html[data-scene="doppio"] header::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 50vw;
+    background-color: var(--o-paper);
+  }
+
+  html[data-scene="doppio"] .bar a {
+    color: var(--o-ink);
+  }
+}
+
+/* "taglio": a slanted cut, with a second tone to the right of it. */
+
+html[data-scene="taglio"] header::before {
+  background-color: transparent;
+  background-image: linear-gradient(108deg, transparent 0 55%, var(--line) 55% 100%);
+  background-size: auto;
+}
+
+/* "sole" and "alone": a disc, or a soft glow, behind the drawing. */
+
+html[data-scene="sole"] .element,
+html[data-scene="alone"] .element {
+  isolation: isolate;
+}
+
+html[data-scene="sole"] .element::before,
+html[data-scene="alone"] .element::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  top: 53%;
+  width: 72%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: var(--tint);
+}
+
+html[data-scene="alone"] .element::before {
+  width: 135%;
+  background: radial-gradient(closest-side, var(--tint), transparent);
+}
+
+/* A floating structure is not in its box any more: the disc must stay behind it. */
+
+html[data-scene="sole"] .stage .element,
+html[data-scene="alone"] .stage .element {
+  isolation: auto;
+}
+
+html[data-scene="sole"] .stage .element::before,
+html[data-scene="alone"] .stage .element::before {
+  z-index: -2;
+}
+
+/* "cornice": a frame around the window. */
+
+html[data-scene="cornice"] {
+  --frame: clamp(0.45rem, 1.7vw, 0.85rem);
+}
+
+html[data-scene="cornice"] body {
+  padding: var(--frame);
+}
+
+html[data-scene="cornice"] body::after {
+  content: "";
+  position: fixed;
+  z-index: 5;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border: var(--frame) solid var(--ink);
+  pointer-events: none;
+}
+
+/* ==== stile: a class on the drawing, written by tools/pose.js ==== */
+
+/* "vetro": the lit faces let the far side show through. */
+
+.rods.s-vetro .face {
+  opacity: 0.5;
+}
+
+.rods.s-vetro .node,
+.rods.s-vetro .case,
+.rods.s-costellazione .node,
+.rods.s-costellazione .case {
+  stroke: none;
+}
+
+/* "disegno": a technical drawing, with the hidden edges dashed. */
+
+.rods.s-disegno .node {
+  fill: var(--paper);
+  stroke: var(--piece);
+  stroke-width: 1.4;
+}
+
+.rods.s-disegno .node.mark,
+.rods.s-disegno .node.held {
+  fill: var(--accent);
+  stroke: var(--accent);
+}
+
+.rods.s-disegno .back .ink {
+  stroke-dasharray: 5 4;
+  stroke-linecap: butt;
+}
+
+.rods.s-disegno .back .case {
+  stroke: none;
+}
+
+/* "magneti": bars in the accent colour between steel balls. */
+
+.rods.s-magneti .ink {
+  stroke: var(--node);
+}
+
+.rods.s-magneti .cable .ink {
+  stroke: var(--piece);
+}
+
+.rods.s-magneti .node {
+  fill: var(--ball);
+}
+
+.rods.s-magneti .d0 { --ball: var(--steel); }
+.rods.s-magneti .d1 { --ball: color-mix(in srgb, var(--steel) 84%, var(--paper)); }
+.rods.s-magneti .d2 { --ball: color-mix(in srgb, var(--steel) 70%, var(--paper)); }
+.rods.s-magneti .d3 { --ball: color-mix(in srgb, var(--steel) 58%, var(--paper)); }
+
+.rods.s-magneti .node.mark,
+.rods.s-magneti .node.held {
+  fill: var(--mark);
+}
+
+/* "tubi": thick tubes, with joints of the same colour. */
+
+.rods.s-tubi .node {
+  fill: var(--piece);
+  stroke: none;
+}
+
+.rods.s-tubi .node.mark,
+.rods.s-tubi .node.held {
+  fill: var(--accent);
+}
+
+/* ==== carattere: data-font on <html> ==== */
+
+html[data-font="corsivo"] h1,
+html[data-font="corsivo"] h2,
+html[data-font="corsivo"] .mail {
+  font-style: italic;
+}
+
+html[data-font="sans"] h1,
+html[data-font="sans"] h2,
+html[data-font="sans"] .mail,
+html[data-font="manifesto"] h1,
+html[data-font="manifesto"] h2,
+html[data-font="manifesto"] .mail {
+  font-family: var(--sans);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+}
+
+html[data-font="manifesto"] h1,
+html[data-font="manifesto"] h2 {
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.025em;
+}
+
+html[data-font="manifesto"] h1 {
+  font-size: clamp(2.2rem, 9.8vw, 4.6rem);
+  line-height: 0.92;
+}
+
+html[data-font="mono"] h1,
+html[data-font="mono"] h2,
+html[data-font="mono"] .mail {
+  font-family: var(--mono);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+}
+
+html[data-font="mono"] h1 {
+  font-size: clamp(1.95rem, 8.8vw, 4rem);
+  line-height: 1.02;
+}
+
+html[data-font="mono"] .mail {
+  font-size: clamp(1.2rem, 5.4vw, 1.9rem);
+}
+
+/* ==== impaginazione: data-layout on <html> ==== */
+
+/* "specchio": the drawing first; on a wide screen, to the left of the text. */
+
+html[data-layout="specchio"] .hero .element,
+html[data-layout="centro"] .hero .element {
+  order: -1;
+}
+
+/* "centro": one centred column. */
+
+html[data-layout="centro"] .hero {
+  justify-items: center;
+  text-align: center;
+  gap: 1.25rem;
+}
+
+html[data-layout="centro"] .intro p {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*
+ * "grande": the drawing a third larger. On a phone it is scaled rather than
+ * widened, so it runs off the edges without pushing the text off them too.
+ */
+
+html[data-layout="grande"] .hero .element {
+  margin-top: 3.5rem;
+  margin-bottom: 3rem;
+  transform: scale(1.3);
+}
+
+@media (min-width: 52rem) {
+  html[data-layout="specchio"] .hero .element {
+    margin: 0 auto 0 0;
+  }
+
+  html[data-layout="centro"] .hero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-layout="centro"] .hero .element {
+    width: min(100%, 26rem);
+    margin: 0 auto;
+  }
+
+  html[data-layout="grande"] .hero {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  }
+
+  html[data-layout="grande"] .hero .element {
+    width: min(112%, 44rem);
+    margin: 0 -6% 0 auto;
+    transform: none;
+  }
+}
+
+/* ==== more of each ==== */
+
+/* ---- trama ---- */
+
+html[data-bg="righe"] body,
+html[data-bg="righe"] header::before {
+  background-image: linear-gradient(var(--line) 1px, transparent 1px);
+  background-size: 100% 1.7rem;
+}
+
+html[data-bg="isometrica"] body,
+html[data-bg="isometrica"] header::before {
+  background-image: url("isometrica.svg");
+  background-size: 52px 30px;
+}
+
+html[data-bg="esagoni"] body,
+html[data-bg="esagoni"] header::before {
+  background-image: url("esagoni.svg");
+  background-size: 31px 54px;
+}
+
+html[data-bg="stelle"] body,
+html[data-bg="stelle"] header::before {
+  background-image: url("stelle.svg");
+  background-size: 360px 360px;
+}
+
+html[data-bg="aurora"] body,
+html[data-bg="aurora"] header::before {
+  background-image:
+    radial-gradient(60rem 34rem at 92% -4%, var(--tint), transparent 70%),
+    radial-gradient(42rem 30rem at -6% 36%, var(--soft), transparent 70%);
+  background-repeat: no-repeat;
+}
+
+/* ---- scena ---- */
+
+html[data-scene="riflettore"] body,
+html[data-scene="orizzonte"] body,
+html[data-layout="quinta"] body {
+  overflow-x: clip;
+}
+
+html[data-scene="riflettore"] header,
+html[data-scene="orizzonte"] header {
+  position: relative;
+  isolation: isolate;
+  color: var(--ink);
+}
+
+html[data-scene="riflettore"] header::before,
+html[data-scene="orizzonte"] header::before {
+  content: "";
+  position: absolute;
+  z-index: -3;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  margin-left: -50vw;
+  background-color: var(--paper);
+}
+
+html[data-scene="riflettore"] main > section:first-child,
+html[data-scene="orizzonte"] main > section:first-child {
+  border-top: 0;
+}
+
+/* "riflettore": the stage of "palco", with a light on the drawing. */
+
+html[data-scene="riflettore"] header {
+  --paper: var(--o-paper);
+  --ink: var(--o-ink);
+  --muted: var(--o-muted);
+  --line: var(--o-line);
+  --accent: var(--o-accent);
+  --accent-text: var(--o-accent-text);
+  --mark: var(--o-mark);
+  --tint: var(--o-tint);
+  --soft: var(--o-soft);
+  --steel: var(--o-steel);
+  --p0: var(--o-p0);
+  --p1: var(--o-p1);
+  --p2: var(--o-p2);
+  --p3: var(--o-p3);
+  --n0: var(--o-n0);
+  --n1: var(--o-n1);
+  --n2: var(--o-n2);
+  --n3: var(--o-n3);
+}
+
+html[data-scene="riflettore"] .element,
+html[data-scene="arco"] .element {
+  isolation: isolate;
+}
+
+html[data-scene="riflettore"] .element::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  top: 50%;
+  width: 150%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(closest-side, var(--tint), transparent);
+}
+
+/* "arco": an arch behind the drawing. */
+
+html[data-scene="arco"] .element::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  bottom: -4%;
+  width: 62%;
+  height: 100%;
+  transform: translateX(-50%);
+  border-radius: 999px 999px 0 0;
+  background: var(--tint);
+}
+
+html[data-scene="riflettore"] .stage .element,
+html[data-scene="arco"] .stage .element {
+  isolation: auto;
+}
+
+html[data-scene="riflettore"] .stage .element::before,
+html[data-scene="arco"] .stage .element::before {
+  z-index: -2;
+}
+
+/* "orizzonte": a second tone below a line, like a floor. */
+
+html[data-scene="orizzonte"] header::before {
+  background-color: transparent;
+  background-image: linear-gradient(to bottom, transparent 0 64%, var(--line) 64% 100%);
+  background-size: auto;
+}
+
+/* "figura": the drawing framed and captioned, like a figure in a paper. */
+
+html[data-scene="figura"] .hero .element {
+  margin-bottom: 2.6rem;
+  outline: 1px solid var(--muted);
+  outline-offset: 0.35rem;
+}
+
+html[data-scene="figura"] .element::after {
+  content: attr(data-caption);
+  position: absolute;
+  left: -0.35rem;
+  top: calc(100% + 0.95rem);
+  color: var(--muted);
+  font: 500 0.68rem/1.4 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ---- stile ---- */
+
+/* "origami": the faces alone, with their creases. */
+
+.rods.s-origami .node {
+  opacity: 0;
+}
+
+.rods.s-origami .case,
+.rods.s-neon .case {
+  stroke: none;
+}
+
+.rods.s-origami .ink {
+  stroke: var(--paper);
+}
+
+/* "schizzo": pencil lines that waver (the filter is in the drawing itself). */
+
+.rods.s-schizzo .node {
+  fill: var(--paper);
+  stroke: var(--piece);
+  stroke-width: 2;
+}
+
+.rods.s-schizzo .node.mark,
+.rods.s-schizzo .node.held {
+  fill: var(--accent);
+  stroke: var(--accent);
+}
+
+/* "neon": lit tubes. The glow is redrawn at every frame, which costs more than the other styles. */
+
+.rods.s-neon .pieces {
+  filter: drop-shadow(0 0 2.5px var(--accent)) drop-shadow(0 0 9px var(--accent));
+}
+
+.rods.s-neon .ink {
+  stroke: var(--node);
+}
+
+.rods.s-neon .node {
+  fill: var(--ink);
+  stroke: none;
+}
+
+.rods.s-neon .node.mark,
+.rods.s-neon .node.held {
+  fill: var(--mark);
+}
+
+/* ---- carattere ---- */
+
+html[data-font="leggero"] h1,
+html[data-font="leggero"] h2,
+html[data-font="leggero"] .mail {
+  font-family: var(--sans);
+  font-weight: 200;
+  letter-spacing: -0.035em;
+}
+
+html[data-font="inciso"] h1,
+html[data-font="inciso"] h2 {
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+html[data-font="inciso"] h1 {
+  font-size: clamp(1.7rem, 7.4vw, 3.5rem);
+  line-height: 1.12;
+}
+
+html[data-font="inciso"] h2 {
+  font-size: clamp(1.4rem, 4.6vw, 1.9rem);
+}
+
+/* ---- impaginazione ---- */
+
+/* "quinta": the drawing large and pale behind the text. */
+
+html[data-layout="quinta"] .hero {
+  position: relative;
+  isolation: isolate;
+  grid-template-columns: minmax(0, 1fr);
+  min-height: 27rem;
+  align-content: center;
+}
+
+html[data-layout="quinta"] .hero .element {
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  width: min(140vw, 40rem);
+  margin: 0;
+  transform: translate(-30%, -50%);
+  opacity: 0.3;
+}
+
+html[data-layout="quinta"] .intro {
+  text-shadow: 0 0 0.5em var(--paper), 0 0 0.2em var(--paper);
+}
+
+/* The large drawing ends where the first screen ends, not somewhere below it. */
+html[data-layout="quinta"] header {
+  overflow-y: clip;
+}
+
+
+/* "pieno": the first screen fills the window, with the text at the bottom. */
+
+html[data-layout="pieno"] header {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+html[data-layout="pieno"] .hero {
+  flex: 1;
+  align-content: space-between;
+}
+
+html[data-layout="pieno"] .hero .element {
+  order: -1;
+  align-self: center;
+}
+
+@media (min-width: 52rem) {
+  html[data-layout="quinta"] .hero {
+    min-height: 32rem;
+  }
+
+  html[data-layout="quinta"] .hero .element {
+    width: min(62vw, 52rem);
+    transform: translate(-12%, -50%);
+  }
+
+  html[data-layout="pieno"] .hero {
+    align-content: stretch;
+    align-items: end;
+  }
+
+  html[data-layout="pieno"] .hero .element {
+    order: 0;
+  }
+}
+
+/* What a scene draws behind the structure is only to be looked at: taps go through it. */
+
+.element::before,
+.element::after,
+header::before {
+  pointer-events: none;
+}

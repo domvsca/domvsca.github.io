@@ -1,0 +1,475 @@
+/*
+ * One stylesheet for both pages. System fonts only, nothing loaded from
+ * other hosts. Light and dark follow the device setting.
+ */
+
+:root {
+  --serif: ui-serif, "New York", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+
+  --measure: 34rem;
+  --gutter: clamp(1.25rem, 5vw, 3rem);
+}
+
+/*
+ * Colour. The default palette is "notte": warm sand, deep blue, coral joints.
+ * --p0 to --p3 are the rods and --n0 to --n3 the nodes, from nearest to
+ * farthest. --mark is the one node that stands out.
+ */
+
+:root {
+  --paper: #f5e2c8;
+  --ink: #1a2647;
+  --muted: #565f7d;
+  --line: #e2cba8;
+  --accent: #e8552d;
+  --accent-text: #b03a17;
+  --mark: #1a2647;
+  --p0: #1a2647;
+  --p1: #4a4f63;
+  --p2: #76757d;
+  --p3: #999392;
+  --n0: #e8552d;
+  --n1: #eb744f;
+  --n2: #ed906e;
+  --n3: #f0a787;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #131a31;
+    --ink: #f6e9d3;
+    --muted: #a3aac3;
+    --line: #2a3354;
+    --accent: #ff7a55;
+    --accent-text: #ff9273;
+    --mark: #ffd166;
+    --p0: #f6e9d3;
+    --p1: #c4bbaf;
+    --p2: #97928f;
+    --p3: #727175;
+    --n0: #ff7a55;
+    --n1: #cb654d;
+    --n2: #9c5246;
+    --n3: #764240;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 1.0625rem/1.6 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.page {
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+p {
+  max-width: var(--measure);
+  margin: 0 0 1rem;
+}
+
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 0.09em;
+  text-underline-offset: 0.22em;
+}
+
+a:hover {
+  color: var(--accent-text);
+}
+
+a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ---- first screen ---- */
+
+.bar {
+  /* Above whatever a look draws around the structure: its links must always answer. */
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: flex-end;
+  max-width: none;
+  margin: 0;
+  padding-top: 1.1rem;
+}
+
+.bar,
+.kicker,
+.num,
+.fine {
+  font: 500 0.74rem/1.5 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.kicker,
+.fine {
+  color: var(--muted);
+}
+
+.num {
+  color: var(--accent-text);
+}
+
+.hero {
+  display: grid;
+  gap: 1.75rem;
+  padding: clamp(1.5rem, 6vw, 4rem) 0 clamp(1.5rem, 5vw, 5rem);
+}
+
+.kicker {
+  margin-bottom: 1rem;
+}
+
+.kicker span {
+  display: block;
+}
+
+h1,
+h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  text-wrap: balance;
+}
+
+h1 {
+  margin: 0 0 1.25rem;
+  font-size: clamp(2.4rem, 10.6vw, 5rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+}
+
+.lede {
+  margin-bottom: 1.5rem;
+  font-size: clamp(1.125rem, 2.6vw, 1.3rem);
+  line-height: 1.5;
+}
+
+.jump {
+  margin: 0;
+}
+
+/* ---- the die: another look at every roll (see assets/look.js) ---- */
+
+.bar.with-dice {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dice {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55em;
+  /* A finger-sized target that takes no more room than the words. */
+  margin: -0.8rem -0.6rem;
+  padding: 0.8rem 0.6rem;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.dice:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -0.35rem;
+  border-radius: 0.5rem;
+}
+
+.dice svg {
+  flex: none;
+  width: 1.4rem;
+  height: 1.4rem;
+  transform-origin: 50% 55%;
+  /* It shakes a few times to be noticed, then keeps still. */
+  animation: dice-shake 5s ease-in-out 1.2s 5;
+}
+
+.dice .die {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+}
+
+.dice .pip {
+  fill: var(--accent);
+}
+
+.dice:hover svg,
+.dice:focus-visible svg {
+  animation: none;
+  transform: rotate(-14deg);
+}
+
+.dice.rolling svg {
+  animation: dice-roll 0.4s linear infinite;
+}
+
+@keyframes dice-shake {
+  0%, 16%, 100% { transform: rotate(0); }
+  3% { transform: rotate(-16deg); }
+  6% { transform: rotate(13deg); }
+  9% { transform: rotate(-9deg); }
+  12% { transform: rotate(5deg); }
+}
+
+@keyframes dice-roll {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dice svg,
+  .dice.rolling svg {
+    animation: none;
+  }
+}
+
+/* ---- the structure ---- */
+
+/* While the shape of this visit's look is on its way, the one in the markup stays out of sight. */
+.look-pending .element svg {
+  visibility: hidden;
+}
+
+
+.element {
+  position: relative;
+  width: min(88vw, 23rem);
+  margin: 0 auto;
+  aspect-ratio: 360 / 285;
+}
+
+.rods {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  /* Vertical movement and pinch belong to the browser: the page always scrolls. */
+  touch-action: pan-y pinch-zoom;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.rods .thread {
+  stroke: var(--p2);
+  stroke-width: 1.2;
+}
+
+.rods .case,
+.rods .ink {
+  stroke-linecap: round;
+}
+
+.rods .case {
+  stroke: var(--paper);
+}
+
+.rods .ink {
+  stroke: var(--piece);
+}
+
+.rods .node {
+  fill: var(--node);
+  stroke: var(--paper);
+  stroke-width: 2.4;
+}
+
+.rods .d0 { --piece: var(--p0); --node: var(--n0); }
+.rods .d1 { --piece: var(--p1); --node: var(--n1); }
+.rods .d2 { --piece: var(--p2); --node: var(--n2); }
+.rods .d3 { --piece: var(--p3); --node: var(--n3); }
+
+.rods .node.mark,
+.rods .node.held {
+  fill: var(--mark);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .rods {
+    cursor: grab;
+  }
+
+  .rods:active {
+    cursor: grabbing;
+  }
+}
+
+.element-debug {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  margin: 0;
+  padding: 0.4rem 0.55rem;
+  background: var(--ink);
+  color: var(--paper);
+  font: 0.68rem/1.4 var(--mono);
+  pointer-events: none;
+}
+
+/* ---- blocks ---- */
+
+section,
+footer {
+  border-top: 1px solid var(--line);
+  padding: clamp(2.5rem, 8vw, 4.5rem) 0;
+}
+
+.num {
+  margin-bottom: 0.9rem;
+}
+
+h2 {
+  margin: 0 0 1rem;
+  font-size: clamp(1.9rem, 6vw, 2.6rem);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+}
+
+.what {
+  font-size: 1.15rem;
+  line-height: 1.5;
+}
+
+.aside {
+  color: var(--muted);
+}
+
+.out {
+  margin: 1.5rem 0 0;
+}
+
+.out a::after {
+  content: " \2197";
+  color: var(--accent-text);
+}
+
+.body > :last-child {
+  margin-bottom: 0;
+}
+
+b {
+  font-weight: 600;
+}
+
+.mail {
+  font: 400 clamp(1.5rem, 6.4vw, 2.2rem)/1.2 var(--serif);
+  letter-spacing: -0.01em;
+  margin-bottom: 1.5rem;
+  overflow-wrap: anywhere;
+}
+
+.fine {
+  margin-top: 2.5rem;
+}
+
+/* ---- wide screens ---- */
+
+@media (min-width: 52rem) {
+  .kicker span {
+    display: inline;
+  }
+
+  .kicker span + span::before {
+    content: "\00b7\00a0";
+  }
+
+  .hero {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .element {
+    width: min(100%, 32rem);
+    margin: 0 0 0 auto;
+  }
+
+  section,
+  footer {
+    display: grid;
+    grid-template-columns: 9rem minmax(0, 1fr);
+    column-gap: 3rem;
+  }
+
+  .num {
+    margin: 0.85rem 0 0;
+  }
+}
+
+/* ---- optional parts of the drawing: only when the markup has them ---- */
+
+.rods .face {
+  fill: var(--n0);
+  stroke: none;
+}
+
+.rods .shine {
+  fill: #fff;
+  fill-opacity: 0.55;
+  stroke: none;
+}
+
+/* ---- a floating structure: only when the figure has data-free="on" ---- */
+
+.stage {
+  position: relative;
+  isolation: isolate;
+  /* As on the drawing itself: vertical movement and pinch belong to the browser. */
+  touch-action: pan-y pinch-zoom;
+}
+
+.rods.floating {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.stage.near {
+  cursor: grab;
+}
+
+.stage.holding {
+  cursor: grabbing;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* The text stays readable when the structure passes behind it. */
+.stage .intro {
+  text-shadow: 0 0 0.5em var(--paper), 0 0 0.2em var(--paper);
+}

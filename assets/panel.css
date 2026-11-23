@@ -1,0 +1,224 @@
+/*
+ * The author's tools, not for visitors: the panel that assets/panel.js builds
+ * when the address has ?panel=1, and the gallery page (galleria.html).
+ */
+
+/* ==== the panel ==== */
+
+.preview-panel {
+  position: fixed;
+  left: 0.5rem;
+  bottom: 0.5rem;
+  z-index: 20;
+  max-width: calc(100vw - 1rem);
+  padding: 0.3rem;
+  border-radius: 0.9rem;
+  background: #16161a;
+  color: #f2efe6;
+  box-shadow: 0 0.4rem 1.6rem rgba(0, 0, 0, 0.28);
+  font: 500 0.64rem/1 var(--mono);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.preview-panel.open {
+  width: 24rem;
+}
+
+.preview-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.preview-panel button,
+.preview-panel a {
+  flex: none;
+  padding: 0.42rem 0.6rem;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.preview-panel button:hover,
+.preview-panel a:hover {
+  color: inherit;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.preview-panel:not(.open) .preview-rows,
+.preview-panel:not(.open) .preview-head a,
+.preview-panel:not(.open) .preview-head .preview-more {
+  display: none;
+}
+
+.preview-rows {
+  max-height: min(58vh, 26rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.preview-panel p {
+  max-width: none;
+  margin: 0;
+  padding: 0.1rem 0 0.3rem;
+}
+
+.preview-panel p > span:first-child {
+  display: block;
+  padding: 0.45rem 0.6rem 0.3rem;
+  opacity: 0.55;
+}
+
+.preview-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.14rem;
+}
+
+.preview-panel a[aria-current="true"] {
+  background: #f2efe6;
+  color: #16161a;
+}
+
+/* A palette is shown in its own colours. */
+
+.preview-panel a[data-palette] {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.preview-panel a[data-palette]::before {
+  content: "";
+  display: inline-block;
+  width: 0.55em;
+  height: 0.55em;
+  margin-right: 0.45em;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.preview-panel a[data-palette][aria-current="true"] {
+  outline: 2px solid #f2efe6;
+  outline-offset: 1px;
+}
+
+/* On a wide screen the open panel stands at the side and the page makes room for it. */
+
+@media (min-width: 70rem) {
+  html.preview-open body {
+    margin-right: 19rem;
+  }
+
+  .preview-panel.open {
+    display: flex;
+    flex-direction: column;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: 19rem;
+    max-width: none;
+    border-radius: 0;
+  }
+
+  .preview-panel.open .preview-rows {
+    flex: 1;
+    max-height: none;
+  }
+}
+
+/* ==== the gallery: galleria.html ==== */
+
+.gallery {
+  max-width: none;
+  padding: 1rem var(--gutter) 4rem;
+}
+
+.gallery h1 {
+  margin: 0.5rem 0 0.75rem;
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  line-height: 1.05;
+}
+
+.gallery h2 {
+  margin: 2.25rem 0 0.25rem;
+  font-size: 1.5rem;
+}
+
+.gallery .note {
+  max-width: 46rem;
+  color: var(--muted);
+}
+
+.gallery .tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.25rem;
+  max-width: none;
+  font: 500 0.74rem/1.5 var(--mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.gallery .tools a[aria-current="true"] {
+  text-decoration-thickness: 0.2em;
+}
+
+.shots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.1rem 0.9rem;
+  margin: 0.9rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.shot {
+  position: relative;
+  font: 500 0.7rem/1.4 var(--mono);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.shot .frame {
+  display: block;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  background: var(--paper);
+}
+
+.shot iframe {
+  display: block;
+  border: 0;
+  transform-origin: 0 0;
+  pointer-events: none;
+}
+
+.shot .pick {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
+
+.shot .label {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.4rem 0.15rem 0;
+}
+
+.shot.current .frame {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}

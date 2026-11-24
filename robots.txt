@@ -1,7 +1,4 @@
-# The two pages are for everyone. The tools and tests that draw and check
-# them are published with the site, but they are not pages to show in search.
 User-agent: *
-Disallow: /tools/
-Disallow: /tests/
+Disallow:
 
 Sitemap: https://domenicoscalera.com/sitemap.xml
